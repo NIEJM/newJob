@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>生成新订单</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-family:'ArialMT','Arial';
+			font-weight: 700;
+			font-size: 22px;
+		}
+		.col-sm-10{
+			text-align: left !important;
+		}
+		.gray{
+			color: #cccccc;
+		}
+		.blue{
+			color: #1B548D;
+		}
+		.black{
+			color: #000000;
+			font-weight:bold;
+		}
+		.green{
+			color: green;
+			font-weight:bold;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt"><a href="orders_list.html">订单列表</a>
+							</span>
+							<span>>>&nbsp;订单详情</span><span>>>&nbsp;生成新订单</span>
+						</div>
+						<div class="ibox-content">
+							<form role="form" class="form-horizontal" id="teacherInfoForm">
+								<input type="hidden" id="storeID" name="storeID">
+								<input type="hidden" id="storeImgUrl" name="storeImgUrl">
+								<input type="hidden" id="storeName" name="storeName">
+								<input type="hidden" id="storeContactPhone" name="storeContactPhone">
+								<input type="hidden" id="userID" name="userID">
+								<input type="hidden" id="userImgUrl" name="userImgUrl">
+								<input type="hidden" id="userAge" name="userAge">
+								<input type="hidden" id="userCount" name="userCount">
+								<input type="hidden" id="description" name="description">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">学生：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="userNickName" name="userNickName">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">联系电话：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="contactPhone" name="contactPhone"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">授课方式：</label>
+										<input type="radio" id="addressType0" name="addressType" checked value="HOME">老师上门
+										<input type="radio" id="addressType1" name="addressType" value="OTHER">老师指定地点
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">课程类型：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="orderType"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">选择教师：</label>
+									<div class="col-sm-9">
+										<select id="teachers" class="form-control">
+
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">授课地址：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="address" name="address"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">课程时间：</label>
+									<fieldset id="items" class="col-sm-9">
+										<select id="products" multiple="multiple" size="10" class="form-control" >
+
+										</select>
+										<span style="color:red;">按住Ctrl键进行多选。或者按住左键拖动多选</span><br>
+										<span style="color:#cccccc;">灰色</span>为已售出，<span style="color:#1B548D;">蓝色</span>为休息，<span style="color:#000000;">黑色</span>为可售，<span style="color:green;">绿色</span>为不更改教师时的原上课时间
+									</fieldset>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">课程单价：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="unitPrice"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">课次：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="groupCount"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">单次课时：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="groupAmount"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">总费用：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="totalAmount"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">优惠券抵扣：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="discountAmount"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">应付总额：</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control" id="grandTotal"></label>
+									</div>
+								</div>
+							</form>
+							<button type="button" id="save" class="btn btn-warning btn-w-m">提　交</button>
+							<button type="button" id="cancel" class="btn btn-w-m">返　回</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 全局js -->
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/bootstrap.min.js?v=3.4.0"></script>
+		<script src="js/layer/layer.js"></script>
+		<script src="client/common.js"></script>
+		<!-- 自定义js -->
+		<script src="client/order_new.js"></script>
+	<body>
+<html>

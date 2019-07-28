@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>新建优惠券</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-family:'ArialMT','Arial';
+			font-weight: 700;
+			font-size: 22px;
+		}
+		.input-group{
+			padding-left: 15px !important;
+			padding-right: 15px !important;
+		}
+		.col-sm-3{
+			text-align: left !important;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt"><a href="points_list.html">优惠券列表</a>
+							</span>
+							<span id="subtitle">
+							</span>
+						</div>
+						<div class="ibox-content">
+							<form role="form" class="form-horizontal" id="newPointForm">
+								
+							</form>
+							<div class="form-group">
+								<button type="button" id="save" class="btn btn-warning btn-w-m">保　存</button>
+								<button type="button" id="cancel" class="btn btn-w-m">取　消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- 全局js -->
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js?v=3.4.0"></script>
+	<script src="js/layer/layer.js"></script>
+	<script src="client/common.js"></script>
+	<script src="js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="js/plugins/validate/messages_zh.min.js"></script>
+	<!-- 自定义js -->
+	<script src="client/points_add.js"></script>
+	<script id="subtitleTemp" type="text/html">
+		{{#
+			var title = "";
+			switch(d){
+				case 'add': title = '新建优惠券';break;
+				case 'edit': title = '编辑优惠券';break;
+				default:title = '新建优惠券';break;
+			}
+		}}
+		>>&nbsp;{{title}}
+	</script>
+	<script id="newPointTemp" type="text/html">
+		<input type="hidden" name="pointType" value="POINT"><br>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">总发放量：</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" readonly id="issueCount" value="{{d.issueCount}}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">名称：</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" required="" id="pointName" name="pointName" value="{{d.pointName}}" required="required">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">描述：</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" required="" id="pointDescription" name="pointDescription" value="{{d.pointDescription}}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">面值：</label>
+			<div class="col-sm-2 input-group">
+				<input class="form-control" type="text" required="" id="value" name="value" value="{{d.value}}">
+				<span class="input-group-addon">元</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">状态：</label>
+			<div class="col-sm-5">
+				<input type="radio" checked name="status" value="0">启用
+				<input type="radio" id="status" {{d.status=='1'?'checked':''}} name="status" value="1">禁用
+			</div>
+		</div>
+		<div class="form-group">
+ 			<label class="col-sm-2 control-label">发放方式：</label>
+ 			<div class="col-sm-5">
+			<input type="radio" id="" checked name="batchType" value="0">平台人工发放
+			<input type="radio" {{d.batchType=='REGISTER'?'checked':''}} name="batchType" value="1">注册自动发放
+			</div>
+		</div>
+		<div style="display:{{d.id==null?'none':''}};">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">创建人：</label>
+				<label class="col-sm-3 control-label">{{d.createBy}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">创建时间：</label>
+				<label class="col-sm-3 control-label">{{tStamp2Normal(d.createOn)}}</label>
+			</div>
+		</div>
+	</script>
+	</body>
+</html>

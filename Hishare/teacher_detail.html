@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=720,user-scalable=no"/>
+	<meta name="author" content="Ryan">
+	<title>教师详情</title>
+	<link type="text/css" rel="stylesheet" href="css/share_wap.css?v=1.0"/>
+</head>
+<body>
+	<div class="container" id="teacherInfoForm">
+		
+	</div>
+	<div id="downloadBar">
+		<div class="bar-item downloadbar-logo"></div>
+		<div class="bar-item downloadbar-text">
+			<h1>嗨外教</h1>
+			<span>上门外教 随叫随到</span>
+		</div>
+		<div class="bar-item downloadbar-btn"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=flt.student">立即下载</a></div>
+	</div>
+	<script id="teacherInfoTemp" type="text/html">
+		{{#
+			switch(d.country){
+				case '36': var country = 'au';break;
+				case '124': var country = 'ca';break;
+				case '554': var country = 'nz';break;
+				case '702': var country = 'sg';break;
+				case '710': var country = 'za';break;
+				case '826': var country = 'gb';break;
+				case '840': var country = 'us';break;
+				default:var country = 'us';break;
+			}
+		}}
+		<header>
+			<div class="head_img">
+				<img src="{{isNull(d.avatarUrl)==''?'../images/default.png':d.avatarUrl}}" class="img-circle" width="140">
+			</div>
+			<div class="user-info">
+				<div><strong>{{d.nickName}}</strong><i class="sex sex-{{d.gender}}"></i><img src="images/{{country}}.png"></div>
+				<div class="user-data">
+					<p><i class="ico time"></i><span>{{isNull(d.periodOfNumber)}}</span></p>
+					<p><i class="ico like"></i><span>{{isNull(d.praiseOfNumber)}}</span></p>
+				</div>
+			</div>
+		</header>
+		<article>
+			<div class="desc">
+				简介 
+		{{#
+			if(d.passportCertification){
+		}}
+			<label class="c1">护照认证</label>
+		{{#	
+			}
+			if(d.educationCertification){
+		}}
+			<label class="c2">学历认证</label>
+		{{# } }}
+			</div>
+			<div class="desc">
+				{{isNull(d.descriptionInfo)}}
+			</div>
+			<ul class="group_list mt20">
+				<li><div class="list-item"><label>一对一课程单价</label><span class="c3">¥{{isNull(d.oneToOneRackRate)}}/小时</span></div></li>
+				<li><div class="list-item"><label>服务对象</label><span>{{serObj(d.serviceObject)}}</span></div></li>
+				<li><div class="list-item"><label>授课地址</label><span>{{isNull(d.defaultAddress)}}</span></div></li>
+			</ul>
+			<ul class="group_list mt20" id="commentsForm">
+				
+			</ul>
+		</article>
+	</script>
+	<script id="commentsTemp" type="text/html">
+		<li><div class="list-item"><label>课程评价</label></div></li>
+		{{#
+			if(d.content.length==0){
+		}}
+			<li>
+				<p class="comm-desc">暂无评价</p>
+			</li>
+		{{#
+			}
+			for(var i=0;i<d.content.length;i++){
+				if(i==3){
+					break;
+				}
+				var item = d.content[i];
+		}}
+			<li>
+				<p class="comm-info"><img src="{{isNull(item.avatar)==''?'../images/default.png':item.avatar}}" class="img-circle" width="90"><span>{{item.name}}</span><label class="time">{{tStamp2Normal(item.createTime)}}</label></p>
+				<p class="comm-desc">{{item.contents[0].textValue}}</p>
+			</li>
+		{{# } }}
+	</script>
+	<script src="../js/jquery-2.1.1.min.js"></script>
+	<script src="../js/bootstrap.min.js?v=3.4.0"></script>
+	<script src="../js/layer/layer.js"></script>
+	<script src="js/get_teacher.js"></script>
+	<script src="../client/common.js"></script>
+</body>
+</html>

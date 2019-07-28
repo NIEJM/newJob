@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>新建用户</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-family:'ArialMT','Arial';
+			font-weight: 700;
+			font-size: 22px;
+		}
+		.col-sm-6{
+			padding-left: 200px;
+		}
+		ul{
+			margin-top: 10px;
+			padding-left: 0px;
+		}
+		.input-group-btn{
+			vertical-align: top !important;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt"><a href="system_user_manager.html">系统用户管理</a>
+							</span>
+							<span id="subtitle"></span>
+						</div>
+						<div class="ibox-content">
+							<form role="form" class="form-horizontal" id="addSystemUserForm">
+								
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script id="subtitleTemp" type="text/html">
+		{{#
+			var title = "";
+			switch(d){
+				case 'add': title = '新建用户';break;
+				case 'edit': title = '编辑用户';break;
+				default:title = '新建用户';break;
+			}
+		}}
+		>>&nbsp;{{title}}
+	</script>
+	<script id="addSystemUserTemp" type="text/html">
+		<span class="font-txt">账户信息
+			</span><br>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">用户名：</label>
+				<div class="col-sm-5">
+					<input type="text" id="username" required="" name="username" class="form-control" value="{{isNull(d.username)}}" /><br>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">密码：</label>
+				<div class="col-sm-5">
+					<input type="text" id="password" required="" name="password" class="form-control" value="{{isNull(d.password)}}" /><br>
+				</div>
+			</div>
+			<span class="font-txt">用户信息
+			</span><br>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">名字：</label>
+				<div class="col-sm-5">
+					<input type="text" id="nickName" required="" name="nickName" class="form-control" value="{{isNull(d.nickName)}}" /><br>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">联系电话：</label>
+				<div class="col-sm-5">
+					<input type="text" id="phone" required="" name="phone" class="form-control" value="{{isNull(d.phone)}}" /><br>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">角色：</label>
+				<div class="col-sm-5">
+					<input type="text" id="role" readonly required="" name="role" class="form-control" value="HIGH"/><br>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">状态：</label>
+				<div class="col-sm-5">
+					<input type="radio" id="accountStatus" name="accountStatus" checked />启用
+					<input type="radio" name="accountStatus" />禁用<br>
+				</div>
+			</div>
+			<div class="form-group" style="margin-left:0 !important;padding-top:10px;">
+				<button type="button" id="save" class="btn btn-warning btn-w-m">保　存</button>
+				<button type="button" id="cancel" class="btn btn-w-m">取　消</button>
+			</div>
+	</script>
+	<!-- 全局js -->
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js?v=3.4.0"></script>
+	<script src="js/layer/layer.js"></script>
+	<script src="client/common.js"></script>
+	<script src="js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="js/plugins/validate/messages_zh.min.js"></script>
+	<!-- 自定义js -->
+	<script src="client/system_user_add.js"></script>
+	</body>
+</html>

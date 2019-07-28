@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>发放优惠券</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-family:'ArialMT','Arial';
+			font-weight: 700;
+			font-size: 22px;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt"><a href="students_list.html">学生列表</a>
+							</span>
+							<span>>>&nbsp;发放优惠券</span>
+						</div>
+						<div class="ibox-content">
+							<form role="form" class="form-horizontal" id="sendPointsForm">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">昵称：</label>
+									<div class="col-sm-5">
+										<textarea style="height:100px;white-space:normal;" type="text" class="form-control" readonly id="users"></textarea><br>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">选择优惠券：</label>
+									<div class="col-sm-2">
+										<select class="form-control" id="pointBatchID" name="pointBatchID">
+											
+										</select><br>
+									</div>
+									<a href="points_add.html?sta=add">新建优惠券</a>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">记录：</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="memo" name="memo">
+									</div>
+								</div>
+							</form>
+							<div class="form-group">
+								<button type="button" id="save" class="btn btn-warning btn-w-m">发　送</button>
+								<button type="button" id="cancel" class="btn btn-w-m">取　消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- 全局js -->
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js?v=3.4.0"></script>
+	<script src="js/layer/layer.js"></script>
+	<script src="client/common.js"></script>
+	<script id="pointsTemp" type="text/html">
+			<option>请选择</option>
+		{{# 
+			for(var i=0;i<d.length;i++){
+				var item = d[i];
+		}}
+			<option value="{{item.id}}">{{item.pointName}}</option>
+		{{# } }}
+	</script>
+	<script id="usersTemp" type="text/html">
+		{{d}}
+	</script>
+	<!-- 自定义js -->
+	<script src="client/send_points.js"></script>
+	</body>
+</html>

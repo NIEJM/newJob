@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>订单详情</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<style type="text/css">
+		body{
+			color:black;
+		}
+		.font-txt{
+			color: #2f4050;
+			font-size: 22px;
+			font-weight: 700;
+			font-family:'ArialMT','Arial';
+		}
+		.order-title{
+			border: 1px solid #ffcc33;
+			background-color: #ffffcf;
+			padding-bottom: 5px;
+		}
+		.order-body{
+			border-top: 0px solid #cccccc;
+			border-left: 1px solid #cccccc;
+			border-right: 1px solid #cccccc;
+			border-bottom: 1px solid #cccccc;
+		}
+		.order-content{
+			border: 1px solid #cccccc;
+			background-color: #f2f2f2;
+		}
+		.order-content1{
+			margin: 30px 15px auto;
+			padding-top: 15px;
+			padding-bottom: 5px;
+			background-color: white;
+			border: 1px solid #cccccc;
+		}
+		.col-sm-2{
+			text-align: left !important;
+		}
+		.form-group{
+			margin-right: 0px !important;
+			margin-left: 0px !important;
+		}
+		.operationImg{
+			margin-top: 15px;
+			background:url('images/operation.png') center center no-repeat;
+			height: 33px;
+		}
+		.operation{
+			margin-left: 10px;
+			text-align:center;
+			font-size:12px;
+			width:100px;
+			height:50px;
+			float:left;
+		}
+		.col-sm-10{
+			padding-left: 50px !important;
+		}
+		.col-sm-5{
+			text-align: right;
+		}
+		.fail{
+			color:#cccccc;
+		}
+		.c{
+			width: 340px;
+			margin-right: auto;
+			margin-left: auto;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt"><a href="orders_list.html">订单列表</a>
+							</span>
+							<span>>>&nbsp;订单详情
+							</span>
+						</div>
+						<div class="ibox-content" id="orderInfoForm">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 全局js -->
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/bootstrap.min.js?v=3.4.0"></script>
+		<script src="js/layer/layer.js"></script>
+		<script src="client/common.js"></script>
+		<!-- 自定义js -->
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="client/order_info.js"></script>
+		<script id="orderInfoTmp" type="text/html">
+			<div class="panel-body order-title">
+				<label class="col-sm-3 control-label">订单编号：{{d.orderNo}}</label>
+				<label class="col-sm-3 control-label">订单状态：<span style="color:red;">{{orderStatus(d.orderStatus)}}</span></label>
+			</div>
+		{{#
+			var logs = d.orderLogs;var tag = false,log1;
+			logs.sort(function(a,b){return a.changeOn-b.changeOn});
+			var flow1 = '提交订单',flow1Time;
+			var flow2 = '确认接单等待上课',flow2Time;
+			var flow3 = '已完成',flow3Time;
+			var classa="",classb="",classc="";
+			for(var j=0;j<logs.length;j++){
+				log1 = logs[j];
+				switch(log1.orderStatus){
+					case 'PENDING_CONFIRMATION':
+						flow1Time = log1.changeOn;;
+						classa="";classb = " fail";classc = " fail";
+						break;
+					case 'WAIT_FOR_COMPLETION':
+						flow2Time = log1.changeOn;;
+						classa="";classb = "";classc = " fail";tag = true;
+						break;
+					case 'REJECTED':
+						flow2 = '老师拒绝接单';
+						flow2Time = log1.changeOn;
+						classa="";classb = "";classc = " fail";
+						break;
+					case 'USER_CANCELED':
+						flow3 = '学生取消';
+						flow3Time = log1.changeOn;
+						if(tag){
+							classa="";classb = "";classc = "";
+						}else{
+							classa="";classb = " fail";classc = "";
+						}
+						break;
+					case 'FINISHED':
+						flow3Time = log1.changeOn;
+						classa="";classb = "";classc = "";
+						break;
+					case 'ADMIN_CANCELED':
+						flow2 = '老师拒绝接单';flow3 = '后台取消';
+						flow3Time = log1.changeOn;
+						classa="";classb = "";classc = "";
+						break;
+					default:classa=" fail";classb = " fail";classc = " fail";break;
+				}
+			}
+		}}
+			<div class="panel-body" id="operationBody">
+				<div class="operationImg"></div>
+				<div class="c">
+					<div class="operation o-m-l{{classa}}">{{isNull(flow1)}}<br>{{tStamp2Normal(flow1Time,'date')}}<br>{{tStamp2Normal(flow1Time,'time')}}</div>
+					<div class="operation{{classb}}">{{isNull(flow2)}}<br>{{tStamp2Normal(flow2Time,'date')}}<br>{{tStamp2Normal(flow2Time,'time')}}</div>
+					<div class="operation{{classc}}">{{isNull(flow3)}}<br>{{tStamp2Normal(flow3Time,'date')}}<br>{{tStamp2Normal(flow3Time,'time')}}</div>
+				</div>
+			</div>
+			<div class="panel-body order-title">
+				<label class="col-sm-2 control-label">订单跟踪</label>
+			</div>
+			<div class="panel-body order-body">
+				<label class="col-sm-2 control-label">处理时间</label>
+				<label class="col-sm-3 control-label">处理信息</label>
+				<label class="col-sm-4 control-label">描述/理由</label>
+				<label class="col-sm-2 control-label">操作人</label>
+			</div>
+		{{#
+			var logs = d.orderLogs;
+			logs.sort(function(a,b){return a.changeOn-b.changeOn});
+			for(var i=0;i<logs.length;i++){
+				var log2 = logs[i];
+		}}
+			<div class="panel-body order-body">
+				<label class="col-sm-2 control-label">{{tStamp2Normal(log2.changeOn)}}</label>
+				<label class="col-sm-3 control-label">{{orderInfo(log2.orderStatus)}}</label>
+				<label class="col-sm-4 control-label">{{isNull(log2.memo)}}</label>
+				<label class="col-sm-2 control-label">{{isNull(log2.changeBy)}}</label>
+			</div>
+		{{# } }}
+			<br>
+			<div class="panel-body order-content">
+				<label class="col-sm-12 control-label">订单信息</label>
+				<div class="panel-body order-content1">
+					<label class="col-sm-2 control-label">学生：{{isNull(d.userNickName)}}</label>
+					<label class="col-sm-3 control-label">联系方式：{{isNull(d.contactPhone)}}</label>
+					<label class="col-sm-2 control-label">年龄：{{d.userAge}}岁</label>
+					<label class="col-sm-4 control-label">人数：{{d.userCount}}人</label>
+					<label class="col-sm-2 control-label">教师：{{d.storeName}}</label>
+					<label class="col-sm-9 control-label">联系方式：{{isNull(d.storeContactPhone)}}</label>
+					<label class="col-sm-12 control-label">课程类型：{{d.orderType=='REGULAR'?'一对一':'一对多'}}</label>
+					<label class="col-sm-12 control-label">上课时间：
+					{{tStamp2Normal(d.eta,"WC")}} {{tStamp2Normal(d.eta,"time")}}~{{tStamp2Normal(d.etc,"time")}}
+					</label>
+					<label class="col-sm-7 control-label">授课地址：{{isNull(d.address)}}</label>
+					<label class="col-sm-2 control-label">授课方式：{{d.addressType=='HOME'?'上门':'指定地点'}}</label>
+				</div><br>
+				<label class="col-sm-12 control-label">课程单价：¥{{d.orderItems[0].unitPrice}}</label>
+				<label class="col-sm-12 control-label">课次：{{d.groupCount}}</label>
+				<label class="col-sm-12 control-label">单次课时：{{d.groupAmount}}小时</label>
+				<label class="col-sm-12 control-label">总费用：¥{{d.totalAmount}}</label>
+				<label class="col-sm-12 control-label">优惠券折扣：-¥{{d.discountAmount}}</label>
+			{{#
+				var paymentMethod = "",paymentTSN = "";
+				if(isNull(d.orderPayments)!=''){
+					for(var j=0;j<d.orderPayments.length;j++){
+						var item = d.orderPayments[j];
+						paymentMethod = item.paymentMethod;
+						paymentTSN = item.paymentTSN;
+			}}
+				<label class="col-sm-12 control-label">支付方式：{{paymentMethod}}</label>
+				<label class="col-sm-12 control-label">平台订单号：{{paymentTSN}}</label>
+			{{# } } }}
+				<label class="col-sm-12 control-label" style="font-size:22px;">应付总额：<span style="color:red;">¥{{d.grandTotal}}</span></label>
+			</div><br>
+		{{#
+			if(d.orderStatus=='REJECTED'){
+		}}
+			<button type="button" class="btn btn-primary btn-w-m" id="new">生成新订单</button>
+			<button type="button" class="btn btn-danger btn-w-m" id="cancelDetail">取消订单</button>
+		{{#
+			}
+			if(d.orderStatus=='USER_CANCELED'){
+		}}
+			<div class="panel-body order-content">
+				<label class="col-sm-12 control-label">罚款与退款信息</label>
+				<div class="panel-body order-content1">
+		{{#
+				var payStudent = 0;
+				if((d.eta-flow3Time)<14400000){
+					payStudent = d.grandTotal/2;
+		}}
+					<label class="col-sm-2 control-label">退<span style="color:red;">¥{{payStudent}}</span>给学生</label>
+					<label class="col-sm-3 control-label">罚学生<span style="color:red;">¥{{payStudent}}</span></label>
+		{{# 
+				}else{
+				payStudent = d.grandTotal;
+		}}
+					<label class="col-sm-2 control-label">退<span style="color:red;">¥{{payStudent}}</span>给学生</label>
+					<label class="col-sm-3 control-label">返还<span style="color:red;">{{d.discountAmount}}元优惠券</span>给学生</label>
+		{{# 	} }}
+					<button type="button" class="btn btn-warning btn-w-m" id="fineComplete">去处理</button>
+				</div>
+			</div>
+		{{# } }}
+			<fieldset id="orderDetail" style="display:none;">
+				<br>
+				<label class="col-sm-10 control-label">订单编号：{{d.orderNo}}</label>
+				<label class="col-sm-10 control-label">课程单价：¥{{d.orderItems[0].unitPrice}}</label>
+				<label class="col-sm-10 control-label">课次：{{d.orderItems.length}}次</label>
+				<label class="col-sm-10 control-label">单次课时：{{d.groupAmount}}小时</label>
+				<label class="col-sm-10 control-label">总费用：¥{{d.totalAmount}}</label>
+				<label class="col-sm-10 control-label">优惠券折扣：-¥{{d.discountAmount}}</label>
+				<label class="col-sm-10 control-label" style="font-size:22px;line-height:2;">应付总额：<span style="color:red;">¥{{d.grandTotal}}</span></label>
+				<div style="border-top:1px solid #0f0f0f;margin-top:180px;margin-bottom:15px;"></div>
+				<label class="col-sm-5 control-label">订单取消理由</label>
+				<div class="col-sm-6 input-group">
+					<input class="col-sm-6 form-control" type="text" required="" id="memo" name="memo" value="">
+				</div>
+				<label class="col-sm-5 control-label">需退还给学生</label>
+				<div class="col-sm-6 input-group">
+		{{#
+			payStudent =d.grandTotal;
+		}}
+					<input class="form-control" type="text" id="returnMoney" name="returnMoney" value="{{payStudent}}">
+					<span class="input-group-addon">元</span>
+				</div>
+				<label class="col-sm-5 control-label">补偿学生优惠券的面值</label>
+				<div class="col-sm-6 input-group">
+					<select class="form-control" id="pointBatchID" name="pointBatchID">
+						<option value="">不返还</option>
+		{{# 
+			for(var i=0;i<d.points.length;i++){
+				var item = d.points[i];
+		}}
+						<option value="{{item.id}}">{{item.value}}</option>
+		{{# } }}		
+					</select>
+				</div>
+				<label class="col-sm-5 control-label">需罚教师课酬</label>
+				<div class="col-sm-6 input-group">
+					<input class="form-control" type="text" required="" id="fineMoney" name="fineMoney" value="">
+					<span class="input-group-addon">元</span>
+				</div>
+				<label class="col-sm-5 control-label">付给教师课酬</label>
+				<div class="col-sm-6 input-group">
+					<input class="form-control" type="text" required="" id="payMoney" name="payMoney" value="">
+					<span class="input-group-addon">元</span>
+				</div>
+			</fieldset>
+		</script>
+	</body>
+</html>

@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>消息详情</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-size: 22px;
+			font-weight: 700;
+			font-family:'ArialMT','Arial';
+		}
+		.title{
+			border: 1px solid #ffcc33;
+			background-color: #ffffcf;
+			padding-bottom: 15px;
+		}
+		.content{
+			padding-top: 5px;
+			border: 1px solid #cccccc;
+			background-color: #f2f2f2;
+		}
+		.col-sm-2{
+			text-align: right !important;
+		}
+		.col-sm-12{
+			text-align: left !important;
+		}
+		.panel-body{
+			padding: 0 !important;
+		}
+		.form-group{
+			margin-right: 0px !important;
+			margin-left: 0px !important;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt"><a href="handle_center.html">待处理中心</a>
+							</span>
+							<span>>>&nbsp;消息详情
+							</span>
+						</div>
+						<div class="ibox-content">
+							<form role="form" class="form-horizontal" id="handleInfoView">
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 全局js -->
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/bootstrap.min.js?v=3.4.0"></script>
+		<script src="js/layer/layer.js"></script>
+		<script src="client/common.js"></script>
+		<!-- 自定义js -->
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="client/handle_info.js"></script>
+		<script id="orderInfoTmp" type="text/html">
+			{{#
+				switch(d.status){
+					case 'NEW':var status = '待处理';break;
+					case 'PROCESSED':var status = '已处理';break;
+					case 'CLOSED':var status = '';break;
+					case 'HOLD':var status = '';break;
+					default:var status = '未知状态';break;
+				}
+			}}
+			<div class="panel-body title">
+				<label class="col-sm-2 control-label">类型：<span class="font-txt">{{d.type}}</span></label>
+				<label class="col-sm-2 control-label">状态：<span class="font-txt" style="color:red;">{{status}}</span></label>
+			</div><br>
+			<span class="font-txt">发送人信息
+			</span><br>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">发送人：</label>
+				<label>{{isNull(d.sendName)}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">类别：</label>
+				<label>教师</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">联系电话：</label>
+				<label>{{isNull(d.contactNumber)}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">发送时间：</label>
+				<label>{{tStamp2Normal(d.sendOn)}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">拒单理由：</label>
+				<label>{{isNull(d.reason)}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">订单编号：</label>
+				<label>{{isNull(d.orderNo)}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">订单状态：</label>
+				<label><span style="color:red;">{{d.type}}</span></label>
+			</div>
+			{{#
+				if(d.status=='PROCESSED'){
+			}}
+			<div class="form-group">
+				<label class="col-sm-2 control-label">处理人：</label>
+				<label>{{isNull(d.handleBy)}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">处理时间：</label>
+				<label>{{tStamp2Normal(d.handleOn)}}</label>
+			</div>
+			{{# }else{ }}
+				<button type="button" id="save" class="btn btn-warning btn-w-m">开始处理</button>
+			{{# } }}
+				<button type="button" id="cancel" class="btn btn-w-m">返　回</button>
+		</script>
+		<script id="withdrawTmp" type="text/html">
+			{{#
+				switch(d.status){
+					case 'NEW':var status = '待处理';break;
+					case 'PROCESSED':var status = '已处理';break;
+					case 'CLOSED':var status = '已关闭';break;
+					case 'HOLD':var status = '';break;
+					default:var status = '未知状态';break;
+				}
+			}}
+			<div class="panel-body title">
+				<label class="col-sm-2 control-label">类型：<span class="font-txt">{{d.type}}</span></label>
+				<label class="col-sm-2 control-label">状态：<span class="font-txt" style="color:red;">{{status}}</span></label>
+			</div><br>
+			<span class="font-txt">发送人信息
+			</span><br>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">发送人：</label>
+				<label>{{isNull(d.sendName)}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">类别：</label>
+				<label>教师</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">联系电话：</label>
+				<label>{{isNull(d.contactNumber)}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">发送时间：</label>
+				<label>{{tStamp2Normal(d.sendOn)}}</label>
+			</div>
+			{{#
+				if(d.status=='PROCESSED'){
+			}}
+			<div class="form-group">
+				<label class="col-sm-2 control-label">处理人：</label>
+				<label>{{isNull(d.handleBy)}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">处理时间：</label>
+				<label>{{tStamp2Normal(d.handleOn)}}</label>
+			</div>
+			{{# } }}
+			<div class="form-group">
+				<div class="panel-body content col-sm-2">
+					<label class="control-label">开户姓名：</label>
+				</div>
+				<div class="panel-body content col-sm-10">
+					<label class="col-sm-12 control-label">{{isNull(d.sendName)}}</label>
+				</div>
+				<div class="panel-body content col-sm-2">
+					<label class="control-label">申请提现金额：</label>
+				</div>
+				<div class="panel-body content col-sm-10">
+					<label class="col-sm-12 control-label">{{I2D(d.withdrawValue)}}元</label>
+				</div>
+				<div class="panel-body content col-sm-2">
+					<label class="control-label">银行卡号：</label>
+				</div>
+				<div class="panel-body content col-sm-10">
+					<label class="col-sm-12 control-label">{{d.cardNumber}}</label>
+				</div>
+				<div class="panel-body content col-sm-2">
+					<label class="control-label">开户银行支行名称：</label>
+				</div>
+				<div class="panel-body content col-sm-10">
+					<label class="col-sm-12 control-label">{{d.bankName}}</label>
+				</div>
+			</div>
+			{{#
+				if(d.status=='NEW' && d.orderID==null){
+			}}
+				<div class="form-group" style="text-align:right !important;">
+					完成财务转账后，请点击<button type="button" id="yzz" class="btn btn-warning btn-w-m">已转账</button>
+				</div>
+			{{# }else{ }}
+				<div class="form-group">
+					<label class="font-txt control-label col-sm-12" style="text-align:right !important;">已处理</label>
+				</div>
+			{{# } }}
+		</script>
+	</body>
+</html>

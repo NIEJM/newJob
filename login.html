@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>嗨外教后台管理平台</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<style type="text/css">
+		.title {
+			background:url('images/b1.png');
+			height: 71px;
+			padding: 20px 20px;
+		}
+		.title span{
+			color: white;
+			font-family:'ArialMT','Arial';
+			font-weight: 600;
+			font-size: 22px;
+		}
+		</style>
+	</head>
+	<body class="fixed-sidebar full-height-layout">
+		<div style="background-color: #2e5e79;height: 100%;">
+			<div class="title">
+				<img src="images/logo.png">
+				<span>嗨外教后台管理平台</span>
+			</div>
+			<div style="width: 400px;background-color:white;margin:200px auto;">
+				<form class="m-t" role="form" id="loginForm" action="index.html">
+					<input type="hidden" name="grant_type" id="grant_type" value="password">
+					<input type="hidden" name="scope" id="scope" value="read write">
+					<input type="hidden" name="client_id" id="client_id" value="clientapp">
+					<input type="hidden" name="client_secret" id="client_secret" value="123456">
+					<div class="form-group" style="padding:5px 10px 5px;color:#1B548D;background-color:#e6f0f3;">
+						<h3>登录</h3>
+					</div>
+					<div style="padding:10px 30px;">
+						<div class="form-group">
+							<label for="username">用户名</label>
+							<input type="text" id="username" name="username" class="form-control" value="" />
+						</div>
+						<div class="form-group">
+							<label for="password">密码</label>
+							<input type="password" id="password" name="password" class="form-control" value="" />
+						</div>
+						<div class="form-group" style="text-align:center">
+							<button type="button" id="loginbtn" class="btn btn-warning btn-w-m">登录</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- 全局js -->
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/bootstrap.min.js?v=3.4.0"></script>
+		<!--自定义js-->
+		<script src="client/common.js"></script>
+		<script src="js/layer/layer.js"></script>
+		<script src="client/login.js"></script>
+	</body>
+</html>

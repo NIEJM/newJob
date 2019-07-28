@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>教师资料</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-family:'ArialMT','Arial';
+			font-weight: 700;
+			font-size: 22px;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt"><a href="teacher_list.html">教师列表</a>
+							</span>
+							<span>>>&nbsp;教师资料</span>
+						</div>
+						<div class="ibox-content">
+							<form role="form" class="form-horizontal" id="teacherInfoForm">
+								
+							</form>
+							<button type="button" id="cancel" class="btn btn-w-m">返　回</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- 全局js -->
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js?v=3.4.0"></script>
+	<script src="js/layer/layer.js"></script>
+	<script src="client/common.js"></script>
+	<script id="teacherInfoTemp" type="text/html">
+		<span class="font-txt">账号信息
+		</span><br>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">用户名：</label>
+			{{isNull(d.loginName)}}
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">密码：</label>
+			<label>**********</label>
+		</div>
+		<span class="font-txt">基本信息
+		</span><br>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">名字：</label>
+			<label>{{isNull(d.nickName)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">全名：</label>
+			<label>{{isNull(d.fullName)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">头像照片：</label>
+			<img src="{{image(d.avatarUrl)}}">
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">列表照片：</label>
+			<img src="{{image(d.largeAvatarUrl)}}">
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">性别：</label>
+			<label>{{isMale(d.gender)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">是否会中文：</label>
+			<label>{{d.speakChinese?'是':'否'}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">护照认证：</label>
+			<label>{{d.passportCertification?'已认证':'未认证'}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">学历认证：</label>
+			<label>{{d.educationCertification?'已认证':'未认证'}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">出生日期：</label>
+			<label>{{isNull(d.birthDay)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">口音：</label>
+			<label>{{isNull(d.accent)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">母语：</label>
+			<label>{{isNull(d.motherTongue)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">出生国：</label>
+			<label>{{isNull(d.countryChinese)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">联系方式：</label>
+			<label>{{isNull(d.phone)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">所在城市：</label>
+			<label>{{isNull(d.cityChinese)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">居住地址：</label>
+			<label>{{isNull(d.address)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">授课地址：</label>
+			<label>{{isNull(d.defaultAddress)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">简介：</label>
+			<label>{{isNull(d.descriptionInfo)}}</label>
+		</div>
+		<span class="font-txt">授课信息
+		</span><br>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">一对一门市价：</label>
+			<label>￥{{isNull(d.oneToOneRackRate)==''?'0':d.oneToOneRackRate}}/小时</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">一对一结算价：</label>
+			<label>￥{{isNull(d.oneToOneClearingPrice)==''?'0':d.oneToOneClearingPrice}}/小时</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">拼课门市价：</label>
+			<label>￥{{isNull(d.togetherRackRate)==''?'0':d.togetherRackRate}}/小时</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">拼课结算价：</label>
+			<label>￥{{isNull(d.togetherClearingPrice)==''?'0':d.togetherClearingPrice}}/小时</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">服务对象：</label>
+			<label>{{serObj(d.serviceObject)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">点赞数：</label>
+			<label>{{isNull(d.praiseOfNumber)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">课时数：</label>
+			<label>{{isNull(d.periodOfNumber)}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">接单状态：</label>
+			<label>{{d.orderReceivingStatus?'接单中':'不接单'}}</label>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">账号状态：</label>
+			<label>{{d.accountStatus?'启用':'禁用'}}</label>
+		</div>
+		<span class="font-txt">备注
+		</span><br>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">内容：</label>
+			<label>{{isNull(d.content)}}</label>
+		</div>
+	</script>
+	<!-- 自定义js -->
+	<script src="client/teacher_info.js"></script>
+	</body>
+</html>

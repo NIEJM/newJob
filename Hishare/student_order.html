@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=720,user-scalable=no"/>
+	<meta name="author" content="Ryan">
+	<title>学生端订单详情</title>
+	<link type="text/css" rel="stylesheet" href="css/share_wap.css?v=1.0"/>
+	<style>
+		.user{position: relative;padding: 60px 0 20px 174px;height: 75px;background: #fff}
+		.user img{position: absolute;top: 20px;left: 30px}
+		.user span{display: block}
+		.user span.name{font-size: 36px}
+		.group_list li{border-bottom: 0}
+	</style>
+</head>
+<body>
+	<div class="container" id="detailView">
+		
+	</div>
+	<div id="downloadBar">
+		<div class="bar-item downloadbar-logo"></div>
+		<div class="bar-item downloadbar-text">
+			<h1>嗨外教</h1>
+			<span>上门外教 随叫随到</span>
+		</div>
+		<div class="bar-item downloadbar-btn"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=flt.student">立即下载</a></div>
+	</div>
+	<script id="detailTemp" type="text/html">
+		<article style="padding: 134px 0">
+			<div class="user">
+				<img src="{{isNull(d.storeImgUrl)==''?'../images/default.png':d.storeImgUrl}}" width="114" class="img-circle">
+				<span class="name">{{d.storeName}}</span>
+			</div>
+			<ul class="group_list mt20">
+				<li><div class="list-item"><label>上课时间</label><span>
+					<p>{{tStamp2Normal(d.eta,"WC")}} {{tStamp2Normal(d.eta,"time")}}~{{tStamp2Normal(d.etc,"time")}}</p>
+				</span></div></li>
+			</ul>
+
+			<ul class="group_list mt20">
+				<li><div class="list-item"><label>课程单价</label><span>¥{{d.orderItems[0].unitPrice}}/小时</span></div></li>
+				<li><div class="list-item"><label>课次</label><span>{{d.groupCount}}次</span></div></li>
+				<li><div class="list-item"><label>单次课时</label><span>{{d.groupAmount}}小时</span></div></li>
+				<li><div class="list-item"><label>总费用</label><span>¥{{d.totalAmount}}</span></div></li>
+			</ul>
+
+		</article>
+	</script>
+	<script src="../js/jquery-2.1.1.min.js"></script>
+	<script src="../js/bootstrap.min.js?v=3.4.0"></script>
+	<script src="../js/layer/layer.js"></script>
+	<script src="js/get_order.js"></script>
+	<script src="../client/common.js"></script>
+</body>
+</html>

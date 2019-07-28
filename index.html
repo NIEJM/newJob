@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>嗨外教后台管理平台</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-family:'ArialMT','Arial';
+			font-weight: 600;
+			font-size: 18px;
+			margin-bottom: 0px;
+		}
+		.title {
+			background:url('images/b1.png');
+			height: 71px;
+			padding: 20px 20px;
+		}
+		.title span{
+			color: white;
+			font-family:'ArialMT','Arial';
+			font-weight: 600;
+			font-size: 22px;
+		}
+		.nav>li>a{
+			padding: 5px 20px !important;
+			color: #000;
+			background-color:#d0cfcb;
+		}
+		.right{
+			float:right;
+			margin-right: 20px;
+		}
+		</style>
+	</head>
+	<body class="fixed-sidebar full-height-layout">
+		<div class="title">
+			<img src="images/logo.png">
+			<span>嗨外教后台管理平台</span>
+			<span class="right">管理员您好！|<a href="#" onclick="logout()">　注销</a><span>
+		</div>
+		<div id="wrapper">
+			<!--左侧导航开始-->
+			<nav class="navbar-default navbar-static-side" role="navigation" style="position:absolute !important;background-color:white;">
+				<ul class="nav nav-stacked">
+				  <li><label class="font-txt">教师</label></li>
+				  <li role="presentation"><a class="J_menuItem" href="teacher_list.html">教师列表</a></li>
+				  <li role="presentation"><a class="J_menuItem" href="handle_center.html">待处理中心</a></li>
+				  <li><label class="font-txt">学生</label></li>
+				  <li role="presentation"><a class="J_menuItem" href="students_list.html">学生列表</a></li>
+				  <li><label class="font-txt">订单</label></li>
+				  <li role="presentation"><a class="J_menuItem" href="orders_list.html">订单列表</a></li>
+				  <li><label class="font-txt">优惠券</label></li>
+				  <li role="presentation"><a class="J_menuItem" href="points_list.html">优惠券列表</a></li>
+				  <li role="presentation"><a class="J_menuItem" href="points_status.html">优惠券使用情况</a></li>
+				  <li><label class="font-txt">账目管理</label></li>
+				  <li role="presentation"><a class="J_menuItem" href="teacher_accounts_list.html">教师账目</a></li>
+				  <li><label class="font-txt">系统管理</label></li>
+				  <!--li role="presentation"><a class="J_menuItem" href="">系统用户管理</a></li>
+				  <li role="presentation"><a class="J_menuItem" href="">角色管理</a></li>
+				  <li role="presentation"><a class="J_menuItem" href="">系统日志</a></li-->
+				  <li role="presentation"><a class="J_menuItem" href="system_application_setting.html">应用设置</a></li>
+				  <li role="presentation"><a class="J_menuItem" href="system_feed_back.html">意见反馈</a></li>
+				  <li role="presentation"><a class="J_menuItem" href="system_content_manage.html">内容管理</a></li>
+				  <li role="presentation"><a class="J_menuItem" href="change_passwd.html">修改密码</a></li>
+				  <!--li role="presentation"><a class="J_menuItem" href="">投诉管理</a></li-->
+				</ul>
+			</nav>
+			<!--左侧导航结束-->
+			<!--右侧部分开始-->
+			<div id="page-wrapper" class="gray-bg dashbard-1">
+				<div class="row J_mainContent" id="content-main">
+					<iframe class="J_iframe" id="iframe0" name="iframe0" width="100%" height="100%" src="teacher_list.html" frameborder="0" seamless></iframe>
+				</div>
+				<div class="footer">
+					<div class="pull-right">&copy; 2016-2017 <a href="/" target="_blank">掌 讯</a>
+					</div>
+				</div>
+			</div>
+			<!--右侧部分结束-->
+		</div>
+		<!-- 全局js -->
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="client/common.js"></script>
+		<script src="js/plugins/layer/layer.min.js"></script>
+		<script type="text/javascript" src="js/contabs.min.js"></script>
+	</body>
+</html>

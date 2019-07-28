@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>订单列表</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<link href="css/font-awesome.min.css?v=4.3.0" rel="stylesheet">
+		<link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-family:'ArialMT','Arial';
+			font-weight: 700;
+			font-size: 22px;
+		}
+		.col-sm-1{
+			padding-left: 0px !important;
+		}
+		.form-group{
+			margin-left: -5px !important;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt" id="listName">
+
+							</span>
+							<span id="subtitle">>>&nbsp;订单列表</span>
+						</div>
+						<div class="ibox-content">
+							<form class="form-horizontal col-sm-12" style="padding-left: 0px;!important">
+								<div class="form-group">
+									<label class="col-sm-1 control-label">订单编号：</label>
+									<div class="col-sm-2">
+										<input type="text" id="" name="" class="form-control">
+									</div>
+									<label class="col-sm-1 control-label">学生：</label>
+									<div class="col-sm-1">
+										<input type="text" id="" name="" class="form-control">
+									</div>
+									<label class="col-sm-1 control-label">教师：</label>
+									<div class="col-sm-1">
+										<input type="text" id="" name="" class="form-control">
+									</div>
+									<label class="col-sm-1 control-label">订单状态：</label>
+									<div class="col-sm-2">
+										<select id="" name="" class="form-control">
+											<option value="0">不限</option>
+											<option value="1">待确认</option>
+											<option value="2">待上课</option>
+											<option value="3">已拒单</option>
+											<option value="4">学生取消</option>
+											<option value="5">后台取消</option>
+											<option value="6">已完成</option>
+										</select><br>
+									</div>
+									<button type="button" id="search" class="btn btn-warning btn-w-m">搜索</button>
+								</div>
+							</form>
+							<div id="data-table" class="form-group">
+								<table class="table table-striped table-bordered table-hover dataTables-example">
+									<thead id="thead">
+									</thead>
+									<tbody id="dataTableView">
+									</tbody>
+								</table>
+								<!--div id="pages"></div-->
+								<button type="button" id="output" class="btn btn-warning btn-w-m">导出</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 全局js -->
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/bootstrap.min.js?v=3.4.0"></script>
+		<script src="js/layer/layer.js"></script>
+		<script src="client/common.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<!-- Data Tables -->
+		<!-- 引自http://laypage.layui.com -->
+		<!--script src="js/laypage.js"></script-->
+		<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+		<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+		<!-- 自定义js -->
+		<script src="client/orders_list.js"></script>
+		<script id="HaFTmp" type="text/html">
+			<tr>
+				<th>操作</th>
+				<th>订单编号</th>
+				<th>门市价</th>
+				<th>优惠券抵扣</th>
+				<th>结算价</th>
+				<th>学生</th>
+				<th>教师</th>
+				<th>订单状态</th>
+				<th>下单时间</th>
+				<th>授课方式</th>
+			</tr>
+		</script>
+		<script id="listNameTemp" type="text/html">
+			{{#
+				var title = "";
+				switch(d.lab){
+					case 'student': title = '学生列表';break;
+					case 'teacher': title = '教师列表';break;
+					default: title = '订单列表';break;
+				}
+			}}
+			<a href="{{d.url}}">{{title}}</a>
+		</script>
+		<script id="dataTableTemp" type="text/html">
+			{{#
+				for(var i=0;i<d.content.length;i++){
+					var item = d.content[i];
+			}}
+				<tr class="gradeA">
+					<td>
+			{{#
+				if(item.orderStatus=='TO_BE_PAID' ||item.orderStatus=='CANCEL_PAYMENT'){
+			}}
+					查看
+			{{#
+				}else{
+			}}
+					<a href="order_info.html?id={{item.id}}">查看</a>
+			{{# } }}
+					</td>
+					<td>{{item.orderNo}}</td>
+					<td>{{I2D(item.totalAmount)}}</td>
+					<td>{{I2D(item.discountAmount)}}</td>
+					<td>{{I2D(item.costAmount)}}</td>
+					<td>{{isNull(item.userNickName)}}</td>
+					<td>{{isNull(item.storeName)}}</td>
+					<td>{{orderStatus(item.orderStatus)}}</td>
+					<td>{{tStamp2Normal(item.createOn)}}</td>
+					<td>{{item.addressType=='HOME'?'上门':'指定地点'}}</td>
+				</tr>
+			{{# } }}
+		</script>
+	</body>
+</html>

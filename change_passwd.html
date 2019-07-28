@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>修改密码</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-family:'ArialMT','Arial';
+			font-weight: 700;
+			font-size: 22px;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt"><a href="change_passwd.html">修改密码</a></span>
+						</div>
+						<div class="ibox-content">
+							<form role="form" class="form-horizontal" id="changePasswd">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">原密码：</label>
+									<div class="col-sm-4">
+										<input class="form-control" type="text" name="oldPassword" value="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">新密码：</label>
+									<div class="col-sm-4">
+										<input class="form-control" type="text" id="newPwd" name="newPassword" value="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">确认密码：</label>
+									<div class="col-sm-4">
+										<input class="form-control" type="text" id="confirm" value="">
+									</div>
+								</div>
+								<button type="button" class="btn btn-warning btn-w-m" id="save">提交</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 全局js -->
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/bootstrap.min.js?v=3.4.0"></script>
+		<script src="js/layer/layer.js"></script>
+		<script src="client/common.js"></script>
+		<!-- 自定义js -->
+		<script src="client/change_passwd.js"></script>
+	</body>
+</html>

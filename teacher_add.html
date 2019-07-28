@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>新建教师</title>
+		<link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+		<link href="css/style.min.css?v=3.0.0" rel="stylesheet">
+		<link href="css/plugins/webuploader/webuploader.css" rel="stylesheet">
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=088e74b4bac304547f41f68c117af17e&plugin=AMap.Geocoder"></script>
+		<style type="text/css">
+		.font-txt{
+			color: #2f4050;
+			font-family:'ArialMT','Arial';
+			font-weight: 700;
+			font-size: 22px;
+		}
+		.col-sm-7{
+			padding-top: 5px;
+			padding-left: 196px;
+		}
+		ul{
+			margin-top: 10px;
+			padding-left: 0px;
+		}
+		.input-group-btn{
+			vertical-align: top !important;
+		}
+		.lang{
+			display: inherit !important;
+		}
+		</style>
+	</head>
+	<body class="gray-bg" style="background-color:#2f4050 !important;">
+		<div class="wrapper animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title" style="padding:5px 20px 5px;color:#1B548D;background-color:#e6f0f3;">
+							<span class="font-txt"><a href="teacher_list.html">教师列表</a>
+							</span>
+							<span id="subtitle"></span>
+						</div>
+						<div class="ibox-content">
+							<form role="form" class="form-horizontal" id="regTeacherForm" style="display:none">
+								<span class="font-txt">新建教师</span><br>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">用户名：</label>
+									<div class="col-sm-5">
+										<input type="text" id="username" required="" name="username" class="form-control" /><br>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">密码：</label>
+									<div class="col-sm-5">
+										<input type="text" id="password" required="" name="password" class="form-control" /><br>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">名字：</label>
+									<div class="col-sm-5">
+										<input type="text" id="nickName" name="nickName" class="form-control" /><br>
+									</div>
+								</div>
+								<div class="form-group" style="margin-left:0 !important;padding-top:10px;">
+									<button type="button" id="reg" class="btn btn-warning btn-w-m">注册</button>
+									<button type="button" id="cancel" class="btn btn-w-m">取　消</button>
+								</div>
+							</form>
+							<form role="form" class="form-horizontal" id="addTeacherForm" style="display:none">
+								
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script id="subtitleTemp" type="text/html">
+		{{#
+			var title = "";
+			switch(d){
+				case 'add': title = '新建教师';break;
+				case 'edit': title = '编辑教师';break;
+				default:title = '新建教师';break;
+			}
+		}}
+		>>&nbsp;{{title}}
+	</script>
+	<script id="addTeacherTemp" type="text/html">
+		<span class="font-txt">账号信息
+		</span><br>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">用户名：</label>
+			<div class="col-sm-5">
+				<input type="text" readonly id="loginName" class="form-control" value="{{isNull(d.loginName)}}" /><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">密码：</label>
+			<div class="col-sm-5">
+				<input type="text" id="password" name="password" placeholder="要修改密码时再输入" class="form-control" value="" /><br>
+			</div>
+		</div>
+		<span class="font-txt">基本信息
+		</span><br>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">名字：</label>
+			<div class="col-sm-5">
+				<input type="text" id="name" name="name" class="form-control" value="{{isNull(d.nickName)}}" /><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">全名：</label>
+			<div class="col-sm-5">
+				<input type="text" id="fullName" name="fullName" class="form-control" value="{{isNull(d.fullName)}}" /><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">头像照片：</label>
+			<input type="hidden" id="avatarUrl" name="avatarUrl" value="{{isNull(d.avatarUrl)}}">
+			<span class="col-sm-6" style="color:red;">仅支持jpg,png，建议图片尺寸：长*宽 140*140</span>
+			<div id="avatarUrl_box" class="col-sm-6">
+				<img src="{{image(d.avatarUrl)}}" id="avatarUrl_view" width="100%">
+			</div>
+			<div id="upload_avatarUrl" class="col-sm-7">
+				选择文件
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">列表照片：</label>
+			<input type="hidden" id="listUrl" name="largeAvatarUrl" value="{{isNull(d.largeAvatarUrl)}}">
+			<span class="col-sm-6" style="color:red;">仅支持jpg,png，建议图片尺寸：长*宽 346*270</span>
+			<div id="listUrl_box" class="col-sm-6">
+				<img src="{{image(d.largeAvatarUrl)}}" id="listUrl_view" width="100%">
+			</div>
+			<div id="upload_listUrl" class="col-sm-7">
+				选择文件
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">性别：</label>
+			<div class="col-sm-5">
+				<input type="radio" name="gender" checked value="MALE" />男
+				<input type="radio" name="gender" {{d.gender=='FEMALE'?'checked':''}} value="FEMALE" />女<br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">是否会中文：</label>
+			<div class="col-sm-5">
+				<input type="radio" id="speakChinese" name="speakChinese" checked />会
+				<input type="radio" name="speakChinese" {{d.speakChinese?'':'checked'}} />不会<br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">护照认证：</label>
+			<div class="col-sm-5">
+				<input type="radio" id="passportCertification" name="passportCertification" checked value="0" />已认证
+				<input type="radio" name="passportCertification" {{d.passportCertification?'':'checked'}} value="1" />未认证<br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">学历认证：</label>
+			<div class="col-sm-5">
+				<input type="radio" id="educationCertification" name="educationCertification" checked value="0" />已认证
+				<input type="radio" name="educationCertification" {{d.educationCertification?'':'checked'}} value="1" />未认证<br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">出生日期：</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" readonly id="birthDay" name="birthDay" value="{{isNull(d.birthDay)}}" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"/><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">口音：</label>
+			<div class="col-sm-5">
+				<select class="form-control" id="accent" name="accent">
+					<option selected>未选择</option>
+		{{#
+			var accentArry = ["美国","英国","澳大利亚","加拿大","新西兰","南非","新加坡"];
+			var accent = "";var accentStatus = "";
+			for(var i=0;i<accentArry.length;i++){
+				accentStatus = "";
+				accent = accentArry[i];
+				if(d.accent==accent){
+					accentStatus = "selected";
+				}
+		}}
+					<option {{accentStatus}} value="{{accent}}">{{accent}}</option>
+		{{#	} }}
+				</select><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">母语：</label>
+			<div class="col-sm-5">
+				<select class="form-control" id="motherTongue" name="motherTongue">
+		{{#
+			var motherTongueArry = ["English","Non-English"];
+			var motherTongue = "";
+			for(var i=0;i<motherTongueArry.length;i++){
+				var motherTongueStatus = "";
+				motherTongue = motherTongueArry[i];
+				if(d.motherTongue==motherTongue){
+					motherTongueStatus = "selected";
+				}
+		}}
+				<option {{motherTongueStatus}} value="{{motherTongue}}">{{motherTongue}}</option>
+		{{#	} }}
+				</select><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">出生国：</label>
+			<div class="col-sm-5">
+				<select class="form-control" id="country" name="country">
+		{{#
+			if(isNull(d.countrys)!=''){
+			var countrys = d.countrys.items;
+			for(var i=0;i<countrys.length;i++){
+				var countryStatus = "";
+				var countryCode = countrys[i].countryCode;
+				var countryChinese = countrys[i].countryChinese;
+				if(d.countryChinese==countryChinese){
+					countryStatus = "selected";
+				}
+		}}
+				<option {{countryStatus}} value="{{countryCode}}">{{countryChinese}}</option>
+		{{# } } }}
+				</select><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">联系方式：</label>
+			<div class="col-sm-5">
+				<input type="text" id="phone" name="phone" class="form-control" value="{{isNull(d.phone)}}" /><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">所在城市：</label>
+			<div class="col-sm-5">
+				<select class="form-control" id="city" name="city">
+					<option selected value="289">上海</option>
+				</select><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">居住地址：</label>
+			<div class="col-sm-5">
+				<input type="text" id="address" name="address" class="form-control" value="{{isNull(d.address)}}" /><br>
+				<input type="hidden" id="longitude" name="longitude" value="{{isNull(d.longitude)}}">
+				<input type="hidden" id="latitude" name="latitude" value="{{isNull(d.latitude)}}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">默认地址：</label>
+			<div class="col-sm-5">
+				<select class="form-control" name="defaultAddress">
+					<option selected value="">请选择</option>
+		{{#
+			var classAddressList = d.classAddresses;
+			var item1,item2;
+			for(var o=0;o<classAddressList.length;o++){
+				var defaultAddressStatus = "";
+				item1 = classAddressList[o];
+				if(d.defaultAddress==item1.classAddress){
+					defaultAddressStatus = "selected";
+				}
+		}}
+					<option {{defaultAddressStatus}} value="{{item1.classAddress}}">{{item1.classAddress}}</option>
+		{{#	} }}
+				</select><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">授课地址：</label>
+			<div class="col-sm-5">
+				<fieldset id="classAddressList">
+					<ul id="ul-classAddress" style="list-style-type:none;">
+		{{#
+					
+			for(var i=0;i<classAddressList.length;i++){
+				item2 = classAddressList[i];
+		}}
+					<li>
+					<div class="input-group lang">
+					<input type="hidden" class="id" value="{{item2.id}}">
+					<input type="text" class="form-control classAddress" value="{{item2.classAddress}}" />
+					<span class="input-group-btn">
+					<button type="button" class="btn btn-danger btn-sm delete">删除</button>
+					</span></div><br></li>
+		{{#	} }}
+					</ul>
+				</fieldset>
+				<button type="button" class="btn btn-warning btn-sm addAddress">添加</button><br><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">简介：</label>
+			<div class="col-sm-5">
+				<textarea style="height:100px;" class="form-control" id="description" name="description">{{isNull(d.descriptionInfo)}}</textarea>
+			</div>
+		</div>
+		<span class="font-txt">授课信息
+		</span><br>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">一对一门市价：</label>
+			<div class="col-sm-5 input-group m-b">
+				<span class="input-group-addon">￥</span>
+				<input class="form-control" type="text" id="oneToOneRackRate" name="oneToOneRackRate" value="{{I2D(d.oneToOneRackRate)}}">
+				<span class="input-group-addon">/小时</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">一对一结算价：</label>
+			<div class="col-sm-5 input-group m-b">
+				<span class="input-group-addon">￥</span>
+				<input class="form-control" type="text" id="oneToOneClearingPrice" name="oneToOneClearingPrice" value="{{I2D(d.oneToOneClearingPrice)}}">
+				<span class="input-group-addon">/小时</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">拼课门市价：</label>
+			<div class="col-sm-5 input-group m-b">
+				<span class="input-group-addon">￥</span>
+				<input class="form-control" type="text" id="togetherRackRate" name="togetherRackRate" value="{{I2D(d.togetherRackRate)}}">
+				<span class="input-group-addon">/小时</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">拼课结算价：</label>
+			<div class="col-sm-5 input-group m-b">
+				<span class="input-group-addon">￥</span>
+				<input class="form-control" type="text" id="togetherClearingPrice" name="togetherClearingPrice" value="{{I2D(d.togetherClearingPrice)}}">
+				<span class="input-group-addon">/小时</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">服务对象：</label>
+			<div class="col-sm-5">
+				<select class="form-control" id="serviceObject" name="serviceObject">
+		{{#
+			var serviceObjectArry = ["所有","少儿口语","成人口语"];
+			var serviceObjectArryE = ["ALL","CHILD","ADULT"];
+			var serviceObject = "",serviceObjectE="";
+			for(var i=0;i<serviceObjectArryE.length;i++){
+				var serviceObjectStatus = "";
+				serviceObject = serviceObjectArry[i];
+				serviceObjectE = serviceObjectArryE[i];
+				if(d.serviceObject==serviceObjectE){
+					serviceObjectStatus = "selected";
+				}
+		}}
+				<option {{serviceObjectStatus}} value="{{serviceObjectE}}">{{serviceObject}}</option>
+		{{#	} }}
+				</select><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">点赞数：</label>
+			<div class="col-sm-5">
+				<input type="text" id="praiseOfNumber" name="praiseOfNumber" class="form-control" value="{{isNull(d.praiseOfNumber)==''?'0':d.praiseOfNumber}}"/><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">课时数：</label>
+			<div class="col-sm-5">
+				<input type="text" id="periodOfNumber" name="periodOfNumber" class="form-control" value="{{isNull(d.periodOfNumber)==''?'0':d.periodOfNumber}}"/><br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">接单状态：</label>
+			<div class="col-sm-5">
+				<input type="radio" id="orderReceivingStatus" name="orderReceivingStatus" checked />接单中
+				<input type="radio" name="orderReceivingStatus" {{d.orderReceivingStatus?'':'checked'}} />不接单<br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">是否接受拼课：</label>
+			<div class="col-sm-5">
+				<input type="radio" id="togetherStatus" name="togetherStatus" checked />是
+				<input type="radio" name="togetherStatus" {{d.togetherStatus?'':'checked'}} />否<br>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">账号状态：</label>
+			<div class="col-sm-5">
+				<input type="radio" id="accountStatus" name="accountStatus" checked />启用
+				<input type="radio" name="accountStatus" {{d.accountStatus?'':'checked'}} />禁用<br>
+			</div>
+		</div>
+		<span class="font-txt">备注
+		</span><br>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">内容：</label>
+			<div class="col-sm-5">
+				<textarea style="height:100px;" class="form-control" id="content" name="content">{{isNull(d.content)}}</textarea>
+			</div>
+		</div>
+		<div class="form-group" style="margin-left:0 !important;padding-top:10px;">
+			<button type="button" id="save" class="btn btn-warning btn-w-m">保　存</button>
+			<button type="button" id="cancel" class="btn btn-w-m">取　消</button>
+		</div>
+	</script>
+	<!-- 全局js -->
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js?v=3.4.0"></script>
+	<script src="js/layer/layer.js"></script>
+	<script src="client/common.js"></script>
+	<script src="js/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+	<script src="js/plugins/webuploader/webuploader.min.js"></script>
+	<script src="js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="js/plugins/validate/messages_zh.min.js"></script>
+	<!-- 自定义js -->
+	<script src="client/teacher_add.js"></script>
+	</body>
+</html>

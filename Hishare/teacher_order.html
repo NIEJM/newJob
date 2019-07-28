@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=720,user-scalable=no"/>
+	<meta name="author" content="Ryan">
+	<title>教师端订单详情</title>
+	<link type="text/css" rel="stylesheet" href="css/share_wap.css?v=1.0"/>
+
+	<style>
+		.downloadbar-logo{background-image: url(images/logo1.png)!important;}
+		.downloadbar-btn{background-image: url(images/download_btn1.png)!important;}
+		.user{position: relative;padding: 35px 0 20px 174px;height: 100px;background: #fff}
+		.user img{position: absolute;top: 20px;left: 30px}
+		.user span{display: block}
+		.user span.name{font-size: 36px}
+		.user span.age{font-size: 24px}
+		.group_list li{border-bottom: 0}
+		.group_list li div.list-item label,.group_list li div.list-item span{width: 50%}
+		.group_list li:last-child{border-top: 1px solid #D5D5D5}
+	</style>
+</head>
+<body>
+	<div class="container" id="detailView">
+		
+	</div>
+	<div id="downloadBar">
+		<div class="bar-item downloadbar-logo"></div>
+		<div class="bar-item downloadbar-text">
+			<h1>嗨外教</h1>
+			<span>上门外教 随叫随到</span>
+		</div>
+		<div class="bar-item downloadbar-btn"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=flt.teacher">Download</a></div>
+	</div>
+	<script id="detailTemp" type="text/html">
+		<article style="padding: 134px 0">
+			<div class="user">
+				<img src="{{isNull(d.userImgUrl)==''?'../images/default.png':d.userImgUrl}}" width="114" class="img-circle">
+				<span class="name">{{d.userNickName}}</span>
+				<span class="age">{{d.userAge}} years old</span>
+			</div>
+			<ul class="group_list mt20">
+				<li style="border-top: 0;border-bottom: 1px solid #D5D5D5">
+					<div class="list-item">
+						<label style="width: 30%">Class time</label>
+						<span style="width: 70%">{{tStamp2Normal(d.eta,"WE")}} {{tStamp2Normal(d.eta,"time")}}~{{tStamp2Normal(d.etc,"time")}}</span>
+					</div>
+				</li>
+			</ul>
+			<ul class="group_list mt20">
+				<li>
+					<div class="list-item">
+						<label>Number of classes</label>
+						<span>Once</span>
+					</div>
+				</li>
+				<li>
+					<div class="list-item">
+						<label>Class duration</label>
+						<span>{{d.groupAmount}} hours</span>
+					</div>
+				</li>
+				<li>
+					<div class="list-item">
+						<label class="c4">Payment</label>
+						<span class="c3">¥{{d.costAmount}}</span>
+					</div>
+				</li>
+			</ul>
+		</article>
+	</script>
+	<script src="../js/jquery-2.1.1.min.js"></script>
+	<script src="../js/bootstrap.min.js?v=3.4.0"></script>
+	<script src="../js/layer/layer.js"></script>
+	<script src="js/get_order.js"></script>
+	<script src="../client/common.js"></script>
+</body>
+</html>
