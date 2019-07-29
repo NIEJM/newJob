@@ -1,6 +1,6 @@
 ﻿/*配置服务器地址*/
 var config = {
-	server_url:'http://192.168.1.23/flt/v1',
+	server_url:'http://www.hiiiclass.com/flt/v1',
 	BASE_URL:'/flt-admin/',
 	upload_url:'http://192.168.1.23/flt/v1/resource/upload',
 	accessToken:store.get('accessToken')||''
