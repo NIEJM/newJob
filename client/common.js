@@ -2,7 +2,7 @@
 var config = {
 	server_url:'http://www.hiiiclass.com/flt/v1',
 	BASE_URL:'/flt-admin/',
-	upload_url:'http://192.168.1.23/flt/v1/resource/upload',
+	upload_url:'http://www.hiiiclass.com/flt/v1/resource/upload',
 	accessToken:store.get('accessToken')||''
 };
 /*表单序列化*/
